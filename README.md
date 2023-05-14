@@ -1,4 +1,4 @@
-# Sample Hardhat Project
+# NFT Staking Project
 
 This project is a staking Project in which user stake ERC721 NFT and get reward as ERC20 token.
 
