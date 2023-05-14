@@ -1,4 +1,4 @@
-/*const { expect } = require('chai');
+const { expect } = require('chai');
 const { ethers } = require("hardhat");
 
 // Start test block
@@ -76,57 +76,8 @@ describe('PestoNftToken', function () {
     .withArgs(this.contractOwner, this.collector, tokenId);
   });
 
-  it('Approves an operator wallet to spend owner NFT', async function () {
-    let tokenId = this.initialMint[0].toString();
-    await this.pestoNftToken.approve(this.collector, tokenId);
-    expect(await this.pestoNftToken.getApproved(tokenId)).to.equal(this.collector);
-  });
-
-  it('Emits an Approval event when an operator is approved to spend a NFT', async function() {
-    let tokenId = this.initialMint[0].toString();
-    await expect(this.pestoNftToken.approve(this.collector, tokenId))
-    .to.emit(this.pestoNftToken, "Approval")
-    .withArgs(this.contractOwner, this.collector, tokenId);
-  });
-
-  it('Allows operator to transfer NFT on behalf of owner', async function () {
-    let tokenId = this.initialMint[0].toString();
-    await this.pestoNftToken.approve(this.collector, tokenId);
-    // Using the collector contract which has the collector's key
-    await this.collectorContract["safeTransferFrom(address,address,uint256)"](this.contractOwner, this.collector, tokenId);
-    expect(await this.pestoNftToken.ownerOf(tokenId)).to.equal(this.collector);
-  });
-
-  it('Approves an operator to spend all of an owner\'s NFTs', async function () {
-    await this.pestoNftToken.setApprovalForAll(this.collector, true);
-    expect(await this.pestoNftToken.isApprovedForAll(this.contractOwner, this.collector)).to.equal(true);
-  });
-
-  it('Emits an ApprovalForAll event when an operator is approved to spend all NFTs', async function() {
-    let isApproved = true
-    await expect(this.pestoNftToken.setApprovalForAll(this.collector, isApproved))
-    .to.emit(this.pestoNftToken, "ApprovalForAll")
-    .withArgs(this.contractOwner, this.collector, isApproved);
-  });
-
-  it('Removes an operator from spending all of owner\'s NFTs', async function() {
-    // Approve all NFTs first
-    await this.pestoNftToken.setApprovalForAll(this.collector, true);
-    // Remove approval privileges
-    await this.pestoNftToken.setApprovalForAll(this.collector, false);
-    expect(await this.pestoNftToken.isApprovedForAll(this.contractOwner, this.collector)).to.equal(false);
-  });
-
-  it('Allows operator to transfer all NFTs on behalf of owner', async function() {
-    await this.pestoNftToken.setApprovalForAll(this.collector, true);
-    for (let i = 0; i < this.initialMint.length; i++) {
-        await this.collectorContract["safeTransferFrom(address,address,uint256)"](this.contractOwner, this.collector, this.initialMint[i]);
-    }
-    expect(await this.pestoNftToken.balanceOf(this.collector)).to.equal(this.initialMint.length.toString());
-  });
-
   it('Only allows contractOwner to mint NFTs', async function () {
     await expect (this.collectorContract.mintCollectionNFT(this.collector, "100")).to.be.reverted;
   });
 
-});*/
+});

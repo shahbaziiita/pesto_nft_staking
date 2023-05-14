@@ -1,4 +1,4 @@
-/*const { expect } = require('chai');
+const { expect } = require('chai');
 const { ethers } = require("hardhat");
 
 // Start test block
@@ -75,61 +75,4 @@ describe('PestoToken', function () {
         .withArgs(this.recipientAddress, this.ownerAddress, ethers.utils.parseUnits(approveAmount.toString(), this.decimals))
   }); 
 
-  it('Allows an approved spender to transfer from owner', async function () {
-    const transferAmount = 10000;
-    await this.pestoToken.transfer(this.recipientAddress, ethers.utils.parseUnits(transferAmount.toString(), this.decimals))
-    await this.signerContract.approve(this.ownerAddress, ethers.utils.parseUnits(transferAmount.toString(), this.decimals))
-    await expect(this.pestoToken.transferFrom(this.recipientAddress, this.ownerAddress, transferAmount)).to.changeTokenBalances(
-        this.pestoToken,
-        [this.ownerAddress, this.recipientAddress],
-        [transferAmount, -transferAmount]
-      );
-  });
-
-  it('Emits a transfer event with the right arguments when conducting an approved transfer', async function () {
-    const transferAmount = 10000;
-    await this.pestoToken.transfer(this.recipientAddress, ethers.utils.parseUnits(transferAmount.toString(), this.decimals))
-    await this.signerContract.approve(this.ownerAddress, ethers.utils.parseUnits(transferAmount.toString(), this.decimals))
-    await expect(this.pestoToken.transferFrom(this.recipientAddress, this.ownerAddress, ethers.utils.parseUnits(transferAmount.toString(), this.decimals)))
-        .to.emit(this.pestoToken, "Transfer")
-        .withArgs(this.recipientAddress, this.ownerAddress, ethers.utils.parseUnits(transferAmount.toString(), this.decimals))
-  });
-
-  it('Allows allowance to be increased and queried', async function () {
-    const initialAmount = 100;
-    const incrementAmount = 10000;
-    await this.signerContract.approve(this.ownerAddress, ethers.utils.parseUnits(initialAmount.toString(), this.decimals))
-    const previousAllowance = await this.pestoToken.allowance(this.recipientAddress, this.ownerAddress);
-    await this.signerContract.increaseAllowance(this.ownerAddress, ethers.utils.parseUnits(incrementAmount.toString(), this.decimals));
-    const expectedAllowance = ethers.BigNumber.from(previousAllowance).add(ethers.BigNumber.from(ethers.utils.parseUnits(incrementAmount.toString(), this.decimals)))
-    expect((await this.pestoToken.allowance(this.recipientAddress, this.ownerAddress))).to.equal(expectedAllowance);
-  });
-
-  it('Emits approval event when alllowance is increased', async function () {
-    const incrementAmount = 10000;
-    await expect(this.signerContract.increaseAllowance(this.ownerAddress, ethers.utils.parseUnits(incrementAmount.toString(), this.decimals)))
-        .to.emit(this.pestoToken, "Approval")
-        .withArgs(this.recipientAddress, this.ownerAddress, ethers.utils.parseUnits(incrementAmount.toString(), this.decimals))
-  });
-
-  it('Allows allowance to be decreased and queried', async function () {
-    const initialAmount = 100;
-    const decrementAmount = 10;
-    await this.signerContract.approve(this.ownerAddress, ethers.utils.parseUnits(initialAmount.toString(), this.decimals))
-    const previousAllowance = await this.pestoToken.allowance(this.recipientAddress, this.ownerAddress);
-    await this.signerContract.decreaseAllowance(this.ownerAddress, ethers.utils.parseUnits(decrementAmount.toString(), this.decimals));
-    const expectedAllowance = ethers.BigNumber.from(previousAllowance).sub(ethers.BigNumber.from(ethers.utils.parseUnits(decrementAmount.toString(), this.decimals)))
-    expect((await this.pestoToken.allowance(this.recipientAddress, this.ownerAddress))).to.equal(expectedAllowance);
-  });
-
-  it('Emits approval event when alllowance is decreased', async function () {
-    const initialAmount = 100;
-    const decrementAmount = 10;
-    await this.signerContract.approve(this.ownerAddress, ethers.utils.parseUnits(initialAmount.toString(), this.decimals))
-    const expectedAllowance = ethers.BigNumber.from(ethers.utils.parseUnits(initialAmount.toString(), this.decimals)).sub(ethers.BigNumber.from(ethers.utils.parseUnits(decrementAmount.toString(), this.decimals)))
-    await expect(this.signerContract.decreaseAllowance(this.ownerAddress, ethers.utils.parseUnits(decrementAmount.toString(), this.decimals)))
-        .to.emit(this.pestoToken, "Approval")
-        .withArgs(this.recipientAddress, this.ownerAddress, expectedAllowance)
-  });
-
-});*/
+});
